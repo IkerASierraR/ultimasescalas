@@ -5,35 +5,27 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 430,
-    height: 780,
-    minWidth: 430,
-    minHeight: 720,
-    resizable: false,
-    maximizable: false,
+    width: 1280,
+    height: 720,
+    minWidth: 1024,
+    minHeight: 600,
+    resizable: true,
+    maximizable: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
   });
 
   mainWindow.loadURL("http://localhost:5173");
+  mainWindow.maximize();
 }
 
 ipcMain.handle("upt:set-window-mode", (_event, mode) => {
   if (!mainWindow || mainWindow.isDestroyed()) return;
 
-  if (mode === "authenticated") {
-    mainWindow.setResizable(true);
-    mainWindow.setMaximizable(true);
-    mainWindow.maximize();
-    return;
-  }
-
-  mainWindow.unmaximize();
-  mainWindow.setResizable(false);
-  mainWindow.setMaximizable(false);
-  mainWindow.setSize(430, 780, false);
-  mainWindow.center();
+  mainWindow.setResizable(true);
+  mainWindow.setMaximizable(true);
+  mainWindow.maximize();
 });
 
 app.whenReady().then(() => {
