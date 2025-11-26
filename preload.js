@@ -1,4 +1,4 @@
-import { contextBridge, shell } from 'electron'
+import { contextBridge, ipcRenderer, shell } from 'electron'
 
 contextBridge.exposeInMainWorld('uptDesktop', {
   openExternal: (url) => {
@@ -6,4 +6,9 @@ contextBridge.exposeInMainWorld('uptDesktop', {
       shell.openExternal(url)
     }
   },
+  setWindowMode: (mode) => {
+    if (mode === 'authenticated' || mode === 'login') {
+      ipcRenderer.invoke('upt:set-window-mode', mode)
+    }
+  }
 })

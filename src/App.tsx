@@ -153,6 +153,13 @@ function App() {
     };
   }, [qrRoute, session]);
 
+  useEffect(() => {
+    if (qrRoute) return;
+
+    const mode = user ? 'authenticated' : 'login';
+    window.uptDesktop?.setWindowMode?.(mode);
+  }, [qrRoute, user]);
+
   if (qrRoute) {
     return <QrReservaVerificationPage token={qrRoute.token} />;
   }
