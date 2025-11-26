@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { type FC, useEffect } from 'react';
 import './styles/LoginScreen.css';
 import type { LoginScreenProps } from './types';
 import { useLogin } from './hooks/useLogin';
@@ -22,6 +22,32 @@ export const LoginScreen: FC<LoginScreenProps> = ({ onLoginSuccess }) => {
     handleSubmit,
   } = useLogin(onLoginSuccess);
 
+  useEffect(() => {
+    const handleContextMenu = (event: Event) => {
+      event.preventDefault();
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const key = event.key.toUpperCase();
+      const isDevToolsShortcut =
+        (event.ctrlKey && event.shiftKey && (key === 'I' || key === 'J')) ||
+        key === 'F12' ||
+        (event.ctrlKey && key === 'U');
+
+      if (isDevToolsShortcut) {
+        event.preventDefault();
+      }
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+  
   const subtitleText = 'Portal Administrativo IntegraUPT';
 
   return (

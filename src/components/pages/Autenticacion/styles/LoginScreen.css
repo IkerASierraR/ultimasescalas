@@ -190,8 +190,8 @@
   border-radius: 0.75rem;
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
-  padding: 2rem;
-  margin-top: 1.25rem;
+  padding: 1.5rem;
+  margin-top: 1rem;
   animation: cardAppear 0.8s ease-out 0.3s both;
 }
 
